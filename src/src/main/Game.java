@@ -25,6 +25,8 @@ public class Game extends Canvas implements Runnable{
 	private Boolean A_key_down = false;
 	private Boolean S_key_down = false;
 	private Boolean D_key_down = false;
+	private Boolean shift_key_down = false;
+	
 	
 	private Thread thread;
 	
@@ -110,6 +112,60 @@ public class Game extends Canvas implements Runnable{
 		
 	}
 	
+	private void move(){
+		if(W_key_down)
+			p.setVelY(-5);
+		if(A_key_down)
+			p.setVelX(-5);
+		if(S_key_down)
+			p.setVelY(5);
+		if(D_key_down)
+			p.setVelX(5);
+		if(W_key_down && A_key_down){
+			p.setVelX(-3.33);
+			p.setVelY(-3.33);
+		}
+		if(W_key_down && D_key_down){
+			p.setVelX(3.33);
+			p.setVelY(-3.33);
+		}
+		if(S_key_down && A_key_down){
+			p.setVelX(-3.33);
+			p.setVelY(3.33);
+		}
+		if(S_key_down && D_key_down){
+			p.setVelX(3.33);
+			p.setVelY(3.33);
+		}
+	}
+	
+	private void focus(){
+		if(W_key_down)
+			p.setVelY(-4);
+		if(A_key_down)
+			p.setVelX(-4);
+		if(S_key_down)
+			p.setVelY(4);
+		if(D_key_down)
+			p.setVelX(4);
+		if(W_key_down && A_key_down){
+			p.setVelX(-2.664);
+			p.setVelY(-2.664);
+		}
+		if(W_key_down && D_key_down){
+			p.setVelX(2.664);
+			p.setVelY(-2.664);
+		}
+		if(S_key_down && A_key_down){
+			p.setVelX(-2.664);
+			p.setVelY(2.664);
+		}
+		if(S_key_down && D_key_down){
+			p.setVelX(2.664);
+			p.setVelY(2.664);
+		}
+	}
+	
 	private void tick(){
 		
 		p.tick();
@@ -130,31 +186,12 @@ public class Game extends Canvas implements Runnable{
 		
 		p.render(g);
 		
-		if(W_key_down)
-			p.setVelY(-5);
-		if(A_key_down)
-			p.setVelX(-5);
-		if(S_key_down)
-			p.setVelY(5);
-		if(D_key_down)
-			p.setVelX(5);
-		if(W_key_down && A_key_down){
-			p.setVelX(-2.5);
-			p.setVelY(-2.5);
+		if(shift_key_down){
+			focus();
+		} else {
+			move();
 		}
-		if(W_key_down && D_key_down){
-			p.setVelX(2.5);
-			p.setVelY(-2.5);
-		}
-		if(S_key_down && A_key_down){
-			p.setVelX(-2.5);
-			p.setVelY(2.5);
-		}
-		if(S_key_down && D_key_down){
-			p.setVelX(2.5);
-			p.setVelY(2.5);
-		}
-
+		
 
 
 		///////////////////////////////////////
@@ -176,6 +213,10 @@ public class Game extends Canvas implements Runnable{
 		} else if(key == KeyEvent.VK_D){
 			D_key_down = true;
 		}
+		
+		if(key == KeyEvent.VK_SHIFT){
+			shift_key_down = true;
+		}
 	}
 	
 	public void keyReleased(KeyEvent e){
@@ -193,6 +234,10 @@ public class Game extends Canvas implements Runnable{
 		} else if(key == KeyEvent.VK_D){
 			D_key_down = false;
 			p.setVelX(0);
+		}
+		
+		if(key == KeyEvent.VK_SHIFT){
+			shift_key_down = false;
 		}
 	}
 	
